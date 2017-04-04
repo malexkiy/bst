@@ -3,7 +3,7 @@
 #include <iostream>
 #include <fstream>
 
-template <class T>
+template <typename T>
 struct Node {
 	Node *leftNode;
 	Node *rightNode;
@@ -38,7 +38,7 @@ struct Node {
 };
 
 
-template <class T>
+template <typename T>
 class BinarySearchTree
 {
 private:
@@ -73,25 +73,25 @@ public:
 	std::ostream& preorderTraversal(std::ostream&) const;
 	std::ostream& postorderTraversal(std::ostream&) const;
 
-	template <class T>
+	template <typename T>
 	friend std::ifstream& operator>>(std::ifstream&, BinarySearchTree<T>&);
-	template <class T>
+	template <typename T>
 	friend std::ofstream& operator<<(std::ofstream&, const BinarySearchTree<T>&);
 
-	template <class T>
+	template <typename T>
 	friend std::ostream& operator<<(std::ostream&, const BinarySearchTree<T>&);
 
 };
 
 
-template <class T>
+template <typename T>
 T max(T a, T b)
 {
 	return (a > b ? a : b);
 }
 
 
-template <class T>
+template <typename T>
 BinarySearchTree<T>::BinarySearchTree()
 {
 	_root = nullptr;
@@ -99,21 +99,21 @@ BinarySearchTree<T>::BinarySearchTree()
 }
 
 
-template <class T>
+template <typename T>
 BinarySearchTree<T>::~BinarySearchTree()
 {
 	_deleteElements(_root);
 }
 
 
-template <class T>
+template <typename T>
 unsigned int BinarySearchTree<T>::height() const
 {
 	return _height;
 }
 
 
-template <class T>
+template <typename T>
 unsigned int BinarySearchTree<T>::_count(const Node<T>* r) const
 {
 	if (!r)
@@ -123,7 +123,7 @@ unsigned int BinarySearchTree<T>::_count(const Node<T>* r) const
 }
 
 
-template <class T>
+template <typename T>
 unsigned int BinarySearchTree<T>::count() const
 {
 	if (_root)
@@ -132,7 +132,7 @@ unsigned int BinarySearchTree<T>::count() const
 }
 
 
-template <class T>
+template <typename T>
 void BinarySearchTree<T>::_insertElement(Node<T>* r, T val)
 {
 	if (val < r->value)
@@ -160,7 +160,7 @@ void BinarySearchTree<T>::_insertElement(Node<T>* r, T val)
 }
 
 
-template <class T>
+template <typename T>
 void BinarySearchTree<T>::insertElement(T val)
 {
 	if (_root == nullptr)
@@ -172,7 +172,7 @@ void BinarySearchTree<T>::insertElement(T val)
 }
 
 
-template <class T>
+template <typename T>
 bool BinarySearchTree<T>::_findElement(const Node<T>* r, const T& val) const
 {
 	if (!r)
@@ -187,7 +187,7 @@ bool BinarySearchTree<T>::_findElement(const Node<T>* r, const T& val) const
 }
 
 
-template <class T>
+template <typename T>
 bool BinarySearchTree<T>::findElement(const T& val) const
 {
 	if (!_root)
@@ -197,7 +197,7 @@ bool BinarySearchTree<T>::findElement(const T& val) const
 }
 
 
-template <class T>
+template <typename T>
 std::ostream& BinarySearchTree<T>::_inorderTraversal(std::ostream& os, const Node<T>* r) const
 {
 	if (r)
@@ -210,7 +210,7 @@ std::ostream& BinarySearchTree<T>::_inorderTraversal(std::ostream& os, const Nod
 }
 
 
-template <class T>
+template <typename T>
 std::ostream& BinarySearchTree<T>::inorderTraversal(std::ostream& os) const
 {
 	if (!_root)
@@ -220,7 +220,7 @@ std::ostream& BinarySearchTree<T>::inorderTraversal(std::ostream& os) const
 }
 
 
-template <class T>
+template <typename T>
 std::ostream& BinarySearchTree<T>::_preorderTraversal(std::ostream& os, const Node<T>* r) const
 {
 	if (r)
@@ -233,7 +233,7 @@ std::ostream& BinarySearchTree<T>::_preorderTraversal(std::ostream& os, const No
 }
 
 
-template <class T>
+template <typename T>
 std::ostream& BinarySearchTree<T>::preorderTraversal(std::ostream& os) const
 {
 	if (!_root)
@@ -243,7 +243,7 @@ std::ostream& BinarySearchTree<T>::preorderTraversal(std::ostream& os) const
 }
 
 
-template <class T>
+template <typename T>
 std::ostream& BinarySearchTree<T>::_postorderTraversal(std::ostream& os, const Node<T>* r) const
 {
 	if (r)
@@ -256,7 +256,7 @@ std::ostream& BinarySearchTree<T>::_postorderTraversal(std::ostream& os, const N
 }
 
 
-template <class T>
+template <typename T>
 std::ostream& BinarySearchTree<T>::postorderTraversal(std::ostream& os) const
 {
 	if (!_root)
@@ -266,7 +266,7 @@ std::ostream& BinarySearchTree<T>::postorderTraversal(std::ostream& os) const
 }
 
 
-template <class T>
+template <typename T>
 std::ifstream& operator>>(std::ifstream& is, BinarySearchTree<T>& bst)
 {
 	unsigned int count;
@@ -289,7 +289,7 @@ std::ifstream& operator>>(std::ifstream& is, BinarySearchTree<T>& bst)
 }
 
 
-template <class T>
+template <typename T>
 std::ofstream& operator<<(std::ofstream& os, const BinarySearchTree<T>& bst)
 {
 	if (!bst._root)
@@ -301,7 +301,7 @@ std::ofstream& operator<<(std::ofstream& os, const BinarySearchTree<T>& bst)
 }
 
 
-template <class T>
+template <typename T>
 std::ostream& printV(std::ostream& os, const Node<T>* r)
 {
 	if (!r)
@@ -317,7 +317,7 @@ std::ostream& printV(std::ostream& os, const Node<T>* r)
 }
 
 
-template <class T>
+template <typename T>
 std::ostream& printH(std::ostream& os, const Node<T>* r, unsigned int level, unsigned int width)
 {
 	if (!r)
@@ -341,7 +341,7 @@ std::ostream& printH(std::ostream& os, const Node<T>* r, unsigned int level, uns
 }
 
 
-template <class T>
+template <typename T>
 Node<T>* BinarySearchTree<T>::min(Node<T>* r) const
 {
 	if(!r->leftNode)
@@ -351,7 +351,7 @@ Node<T>* BinarySearchTree<T>::min(Node<T>* r) const
 }
 
 
-template <class T>
+template <typename T>
 void BinarySearchTree<T>::_deleteElements(Node<T>* r)
 {
 	if (!r)
@@ -365,7 +365,7 @@ void BinarySearchTree<T>::_deleteElements(Node<T>* r)
 }
 
 
-template <class T>
+template <typename T>
 Node<T>* BinarySearchTree<T>::_deleteElement(Node<T>* r, const T& val)
 {
 	if (!r)
@@ -394,14 +394,14 @@ Node<T>* BinarySearchTree<T>::_deleteElement(Node<T>* r, const T& val)
 }
 
 
-template <class T>
+template <typename T>
 void BinarySearchTree<T>::deleteElement(const T& val)
 {
 	_deleteElement(_root, val);
 }
 
 
-template <class T>
+template <typename T>
 std::ostream& operator<<(std::ostream& os, const BinarySearchTree<T>& bst)
 {
 	if (!bst._root)
