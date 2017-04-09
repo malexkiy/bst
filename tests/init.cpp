@@ -5,6 +5,7 @@
 SCENARIO("bst init", "[init]") {
 	BinarySearchTree<int> bst;
 
+	REQUIRE(bst.count == 0);
 }
 
 SCENARIO("bst insert", "[insert]") {
@@ -31,9 +32,9 @@ SCENARIO("bst in", "[in]") {
 	bst.insertElement(10);
 
 	std::stringstream ss;
-	bst.preorderTraversal(ss);
+	bst.inorderTraversal(ss);
 
-	std::string str, pattern = "8 3 10 ";
+	std::string str, pattern = "3 8 10 ";
 	std::getline(ss, str);
 
 	REQUIRE(str == pattern);
@@ -47,15 +48,15 @@ SCENARIO("bst pre", "[pre]") {
 	bst.insertElement(10);
 
 	std::stringstream ss;
-	bst.postorderTraversal(ss);
+	bst.preorderTraversal(ss);
 
-	std::string str, pattern = "3 10 8 ";
+	std::string str, pattern = "8 3 10 ";
 	std::getline(ss, str);
 
 	REQUIRE(str == pattern);
 }
 
-SCENARIO("bst post", "[post]") {
+SCENARIO("bst find", "[find]") {
 	BinarySearchTree<int> bst;
 
 	bst.insertElement(8);
@@ -121,13 +122,13 @@ SCENARIO("bst file read", "[read]") {
 	std::ifstream in("test.bst");
 
 	in >> bst;
+	in.close();
 
 	std::stringstream ss;
 	bst.inorderTraversal(ss);
 
-	std::string str, pattern = "3 3 8 10 ";
-	std::getline(in, str);
-	in.close();
+	std::string str, pattern = "3 8 10 ";
+	std::getline(ss, str);
 
 	REQUIRE(str == pattern);
 }
@@ -148,14 +149,13 @@ SCENARIO("bst print", "[print]") {
 	std::stringstream ss;
 	ss << bst;
 
-	std::string e, str, pattern = "8 3 10 1 6 14 4 7 13 ";
-	
+	std::string e, str, pattern = "\t\t14\n\t\t\t13\n\t10\n8\n\t\t\t7\n\t\t6\n\t\t\t4\n\t3\n\t\t1\n\n";
+
 	while (!ss.eof())
 	{
 		std::getline(ss, e);
-		str += e;
+		str += e + "\n";
 	}
 
 	REQUIRE(str == pattern);
 }
-
