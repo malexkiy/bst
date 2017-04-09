@@ -5,7 +5,7 @@
 SCENARIO("bst init", "[init]") {
 	BinarySearchTree<int> bst;
 
-	REQUIRE(bst.count == 0);
+	REQUIRE(bst.count() == 0);
 }
 
 SCENARIO("bst insert", "[insert]") {
