@@ -62,6 +62,9 @@ public:
 	std::ostream& inorderTraversal(std::ostream&) const;
 	std::ostream& preorderTraversal(std::ostream&) const;
 
+	std::ifstream& inFile(std::ifstream&);
+	std::ofstream& outFile(std::ofstream&) const;
+
 	friend std::ifstream& operator>> <> (std::ifstream&, BinarySearchTree<T>&);
 
 	friend std::ofstream& operator<< <> (std::ofstream&, const BinarySearchTree<T>&);
@@ -332,7 +335,7 @@ std::ostream& BinarySearchTree<T>::preorderTraversal(std::ostream& os) const
 
 
 template <typename T>
-std::ifstream& operator>>(std::ifstream& is, BinarySearchTree<T>& bst)
+std::ifstream& BinarySearchTree<T>::inFile(std::ifstream& is)
 {
 	BinarySearchTree<T> other;
 	unsigned int count;
@@ -345,21 +348,35 @@ std::ifstream& operator>>(std::ifstream& is, BinarySearchTree<T>& bst)
 		other.insertElement(el);
 	}
 
-	bst.swap(other);
-
+	swap(other);
 	return is;
+}
+
+
+template <typename T>
+std::ofstream& BinarySearchTree<T>::outFile(std::ofstream& os) const
+{
+	if (!_root)
+		throw "Binary Search Tree is empty or not initialized\n";
+
+	os << count() << " ";
+	preorderTraversal(os);
+
+	return os;
+}
+
+
+template <typename T>
+std::ifstream& operator>>(std::ifstream& is, BinarySearchTree<T>& bst)
+{
+	return bst.inFile(is);
 }
 
 
 template <typename T>
 std::ofstream& operator<<(std::ofstream& os, const BinarySearchTree<T>& bst)
 {
-	if (!bst._root)
-		throw "Binary Search Tree is empty or not initialized\n";
-
-	os << bst.count() << " ";
-	bst.preorderTraversal(os);
-	return os;
+	return bst.outFile(os);
 }
 
 
