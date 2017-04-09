@@ -12,10 +12,10 @@ template <typename T>
 struct Node;
 
 template <typename T>
-std::ifstream& operator>>(std::fstream&, BinarySearchTree<T>&);
+std::ifstream& operator>>(std::ifstream&, BinarySearchTree<T>&);
 
 template <typename T>
-std::ofstream& operator<<(std::fstream&, const BinarySearchTree<T>&);
+std::ofstream& operator<<(std::ofstream&, const BinarySearchTree<T>&);
 
 template <typename T>
 std::ostream& operator<<(std::ostream&, const BinarySearchTree<T>&);
