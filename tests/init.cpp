@@ -106,7 +106,7 @@ SCENARIO("bst file write", "[write]") {
 	std::stringstream ss;
 	bst.inorderTraversal(ss);
 
-	std::string str, pattern = "3 3 8 10 ";
+	std::string str, pattern = "3 8 3 10 ";
 	std::getline(in, str);
 	in.close();
 
