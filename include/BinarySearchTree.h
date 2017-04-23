@@ -4,6 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include <initializer_list>
+#include <sstream>
 
 
 template <typename T>
