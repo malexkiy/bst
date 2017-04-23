@@ -202,7 +202,7 @@ SCENARIO("BST delete root without children", "[delete]") {
 //      +----+
 SCENARIO("BST delete root with one child", "[delete]") {
 	BinarySearchTree<int> bst = { 8, 4, 3 };
-	REQUIRE(bst.deleteElement(8));
+	bst.deleteElement(8);
 	REQUIRE(bst == BinarySearchTree<int>({ 4, 3 }));
 }
 
@@ -231,7 +231,7 @@ SCENARIO("BST delete root with one child", "[delete]") {
 //                          +----+                                              +----+
 SCENARIO("BST delete root with children", "[delete]") {
 	BinarySearchTree<int> bst = { 8, 4, 3, 10, 9, 13, 11, 12 };
-	REQUIRE(bst.deleteElement(8));
+	bst.deleteElement(8);
 	REQUIRE(bst == BinarySearchTree<int>({ 9, 4, 3, 10, 13, 11, 12 }));
 }
 
@@ -260,7 +260,7 @@ SCENARIO("BST delete root with children", "[delete]") {
 //                          +----+                                              +----+
 SCENARIO("BST delete non root without children", "[delete]") {
 	BinarySearchTree<int> bst = { 8, 4, 3, 10, 9, 13, 11, 12 };
-	REQUIRE(bst.deleteElement(3));
+	bst.deleteElement(3);
 	REQUIRE(bst == BinarySearchTree<int>({ 8, 4, 10, 9, 13, 11, 12 }));
 }
 
@@ -289,7 +289,7 @@ SCENARIO("BST delete non root without children", "[delete]") {
 //                          +----+
 SCENARIO("BST delete non root with one child", "[delete]") {
 	BinarySearchTree<int> bst = { 8, 4, 3, 10, 9, 13, 11, 12 };
-	REQUIRE(bst.deleteElement(11));
+	bst.deleteElement(11);
 	REQUIRE(bst == BinarySearchTree<int>({ 8, 4, 3, 10, 9, 13, 12 }));
 }
 
@@ -318,6 +318,6 @@ SCENARIO("BST delete non root with one child", "[delete]") {
 //                          +----+
 SCENARIO("BST delete non root with children", "[delete]") {
 	BinarySearchTree<int> bst = { 8, 4, 3, 10, 9, 13, 11, 12 };
-	REQUIRE(bst.deleteElement(10));
+	bst.deleteElement(10);
 	REQUIRE(bst == BinarySearchTree<int>({ 8, 4, 3, 11, 9, 13, 12 }));
 }
