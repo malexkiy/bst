@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <fstream>
+#include <initializer_list>
 
 
 template <typename T>
@@ -51,6 +52,7 @@ private:
 
 public:
 	BinarySearchTree();
+	BinarySearchTree(const std::initializer_list<T>&);
 	~BinarySearchTree();
 
 	unsigned int count() const;
@@ -71,6 +73,8 @@ public:
 
 	friend std::ostream& operator<< <> (std::ostream&, const BinarySearchTree<T>&);
 
+	bool operator==(const BinarySearchTree<T>&) const;
+
 };
 
 
@@ -78,6 +82,17 @@ template <typename T>
 BinarySearchTree<T>::BinarySearchTree()
 {
 	_root = nullptr;
+}
+
+
+template <typename T>
+BinarySearchTree<T>::BinarySearchTree(const std::initializer_list<T>& list)
+{
+	_root = nullptr;
+	for (auto it = list.begin(); it != list.end(); ++it)
+	{
+		insertElement(*it);
+	}
 }
 
 
@@ -97,6 +112,20 @@ void BinarySearchTree<T>::swap(BinarySearchTree<T>& other)
 		_root = other._root;
 		other._root = tmp;
 	}
+}
+
+
+template <typename T>
+bool BinarySearchTree<T>::operator==(const BinarySearchTree<T>& other) const
+{
+	std::stringstream ss1, ss2;
+	std::string s1, s2;
+
+	preorderTraversal(ss1);
+	other.preorderTraversal(ss2);
+	ss1 >> s1;
+	ss2 >> s2;
+	return s1 == s2;
 }
 
 
@@ -201,29 +230,33 @@ template <typename T>
 Node<T>* BinarySearchTree<T>::_deleteRoot(Node<T>* head)
 {
 	Node<T>* cur, *parent;
-	cur = head->rightNode;
-	if (!cur)
+	if (head)
 	{
-		cur = head->leftNode;
-	}
-	else
-	{
-		if (cur->leftNode)
+		cur = head->rightNode;
+		if (!cur)
 		{
-			parent = head;
-			while (cur->leftNode)
-			{
-				parent = cur;
-				cur = cur->leftNode;
-			}
-			parent->leftNode = cur->rightNode;
-			cur->rightNode = head->rightNode;
+			cur = head->leftNode;
 		}
-		cur->leftNode = head->leftNode;
+		else
+		{
+			if (cur->leftNode)
+			{
+				parent = head;
+				while (cur->leftNode)
+				{
+					parent = cur;
+					cur = cur->leftNode;
+				}
+				parent->leftNode = cur->rightNode;
+				cur->rightNode = head->rightNode;
+			}
+			cur->leftNode = head->leftNode;
+		}
+
+		delete head;
+		return cur;
 	}
-	
-	delete head;
-	return cur;
+	return nullptr;
 }
 
 
@@ -231,26 +264,29 @@ template <typename T>
 void BinarySearchTree<T>::deleteElement(const T& val)
 {
 	Node<T>* cur = _root, *parent;
-	if (_root->value == val)
+	if (_root)
 	{
-		_root = _deleteRoot(_root);
-	}
-	else
-	{
-		parent = _root;
-		if (val < parent->value) cur = parent->leftNode;
-		else cur = parent->rightNode;
-		while (cur)
+		if (_root->value == val)
 		{
-			if (cur->value == val)
-			{
-				if (val < parent->value) parent->leftNode = _deleteRoot(parent->leftNode);
-				else parent->rightNode = _deleteRoot(parent->rightNode);
-				return;
-			}
-			parent = cur;
+			_root = _deleteRoot(_root);
+		}
+		else
+		{
+			parent = _root;
 			if (val < parent->value) cur = parent->leftNode;
 			else cur = parent->rightNode;
+			while (cur)
+			{
+				if (cur->value == val)
+				{
+					if (val < parent->value) parent->leftNode = _deleteRoot(parent->leftNode);
+					else parent->rightNode = _deleteRoot(parent->rightNode);
+					return;
+				}
+				parent = cur;
+				if (val < parent->value) cur = parent->leftNode;
+				else cur = parent->rightNode;
+			}
 		}
 	}
 }
@@ -340,6 +376,10 @@ std::ifstream& BinarySearchTree<T>::inFile(std::ifstream& is)
 	BinarySearchTree<T> other;
 	unsigned int count;
 	T el;
+
+	if (!is.is_open())
+		throw "File not opened!";
+
 	is >> count;
 
 	while (count--)
@@ -358,6 +398,9 @@ std::ofstream& BinarySearchTree<T>::outFile(std::ofstream& os) const
 {
 	if (!_root)
 		throw "Binary Search Tree is empty or not initialized\n";
+
+	if (!os.is_open())
+		throw "File not opened!";
 
 	os << count() << " ";
 	preorderTraversal(os);
